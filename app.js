@@ -1,10 +1,10 @@
 /* ==========================================================
-   DỮ LIỆU LOCALSTORAGE
+   DỮ LIỆU LOCALSTORAGE & CẤU HÌNH CỤM DANH MỤC TÙY CHỌN
    ========================================================== */
 let staffList = JSON.parse(localStorage.getItem('bdu_staff_v3')) || [
-  { id: 1, code: "BDU-001", name: "ThS. Nguyễn Văn A", group: "Giảng viên", degree: "Thạc sĩ", role: "Giảng viên cơ hữu", phone: "0901234567", email: "nva@bdu.edu.vn", taskDesc: "Giảng dạy & NCKH" },
-  { id: 2, code: "BDU-002", name: "Đặng Thị B", group: "Nhân viên", degree: "Cử nhân", role: "Thư ký Khoa", phone: "0902345678", email: "dtb@bdu.edu.vn", taskDesc: "Quản lý giáo vụ" },
-  { id: 3, code: "BDU-003", name: "Lê Văn C", group: "Cộng tác viên", degree: "Cử nhân", role: "Trợ giảng", phone: "0903456789", email: "lvc@bdu.edu.vn", taskDesc: "Hỗ trợ chấm bài" }
+  { id: 1, code: "BDU-001", name: "ThS. Nguyễn Văn A", group: "Giảng viên", category: "Giảng dạy & NCKH", area: "Tiếng Anh Chuyên Ngành", degree: "Thạc sĩ", role: "Giảng viên cơ hữu", phone: "0901234567", email: "nva@bdu.edu.vn", taskDesc: "Giảng dạy & NCKH" },
+  { id: 2, code: "BDU-002", name: "Đặng Thị B", group: "Nhân viên", category: "Hành chính & Giáo vụ", area: "Quản lý Giáo vụ", degree: "Cử nhân", role: "Thư ký Khoa", phone: "0902345678", email: "dtb@bdu.edu.vn", taskDesc: "Quản lý giáo vụ" },
+  { id: 3, code: "BDU-003", name: "Lê Văn C", group: "Cộng tác viên", category: "Hỗ trợ Đào tạo", area: "Trợ giảng", degree: "Cử nhân", role: "Trợ giảng", phone: "0903456789", email: "lvc@bdu.edu.vn", taskDesc: "Hỗ trợ chấm bài" }
 ];
 
 let tasks = JSON.parse(localStorage.getItem('bdu_tasks_v3')) || [
@@ -229,19 +229,23 @@ function renderPlanPage() {
   }).join('');
 }
 
-/* HIỂN THỊ DANH SÁCH NHÂN SỰ VÀ SỰ KIỆN CLICK XEM CHI TIẾT */
+/* HIỂN THỊ DANH SÁCH NHÂN SỰ KÈM DANH MỤC LĨNH VỰC BÊN TRÁI */
 function renderStaffPage() {
   const grid = document.getElementById('staffGrid');
   if (!grid) return;
   const keyword = (document.getElementById('searchStaff')?.value || '').toLowerCase();
   const groupFilter = document.getElementById('filterStaffGroup')?.value || 'ALL';
+  const categoryFilter = document.getElementById('filterStaffCategory')?.value || 'ALL';
 
   const filtered = staffList.filter(s => {
     const matchSearch = (s.name || '').toLowerCase().includes(keyword) || 
                         (s.code || '').toLowerCase().includes(keyword) || 
-                        (s.role || '').toLowerCase().includes(keyword);
+                        (s.role || '').toLowerCase().includes(keyword) ||
+                        (s.category || '').toLowerCase().includes(keyword) ||
+                        (s.area || '').toLowerCase().includes(keyword);
     const matchGroup = (groupFilter === 'ALL') || (s.group === groupFilter);
-    return matchSearch && matchGroup;
+    const matchCategory = (categoryFilter === 'ALL') || (s.category === categoryFilter);
+    return matchSearch && matchGroup && matchCategory;
   });
 
   if (filtered.length === 0) {
@@ -254,20 +258,38 @@ function renderStaffPage() {
 
   grid.innerHTML = filtered.map(s => {
     const activeCount = tasks.filter(t => t.staff === s.name && t.status !== 'Hoàn thành').length;
-    return `<div class="staff-card">
-      <div onclick="viewStaffDetail(${s.id})" style="cursor: pointer;" title="Bấm để xem chi tiết thông tin">
-        <div class="staff-top">
-          <div class="staff-avatar">${initials(s.name)}</div>
-          <div style="flex:1;">
-            <div style="font-size: 0.75rem; color: var(--ink-soft); font-weight: 600;">${s.code ? 'Mã: ' + s.code : ''}</div>
-            <div class="staff-name">${s.name}</div>
-            <div class="staff-role">${s.degree ? s.degree + ' - ' : ''}${s.role}</div>
+    
+    return `<div class="staff-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <!-- Phần Header thẻ nhân sự -->
+        <div onclick="viewStaffDetail(${s.id})" style="cursor: pointer;" title="Bấm để chỉnh sửa thông tin">
+          <div class="staff-top">
+            <div class="staff-avatar">${initials(s.name)}</div>
+            <div style="flex:1;">
+              <div style="font-size: 0.75rem; color: var(--ink-soft); font-weight: 600;">${s.code ? 'Mã: ' + s.code : ''}</div>
+              <div class="staff-name">${s.name}</div>
+              <div class="staff-role">${s.degree ? s.degree + ' - ' : ''}${s.role || 'Chưa phân vị trí'}</div>
+            </div>
+            <span class="badge ${badgeClass(s.group)}">${s.group}</span>
           </div>
-          <span class="badge ${badgeClass(s.group)}">${s.group}</span>
+        </div>
+
+        <hr style="border: none; border-top: 1px dashed var(--border-color, #e2e8f0); margin: 10px 0;">
+
+        <!-- Phần Chi tiết thông tin & Danh mục mở rộng -->
+        <div style="font-size: 0.82rem; color: var(--ink-main, #334155); display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; line-height: 1.4;">
+          <div>📂 <b>Danh mục CV:</b> ${s.category || '<i style="color:var(--ink-soft);">Mặc định</i>'}</div>
+          <div>🎯 <b>Lĩnh vực:</b> ${s.area || '<i style="color:var(--ink-soft);">Chưa phân loại</i>'}</div>
+          <div>📞 <b>SĐT:</b> ${s.phone || '<i style="color:var(--ink-soft);">Chưa cập nhật</i>'}</div>
+          <div>✉️ <b>Email:</b> ${s.email || '<i style="color:var(--ink-soft);">Chưa cập nhật</i>'}</div>
+          ${s.facebook ? `<div>🌐 <b>FB:</b> ${s.facebook}</div>` : ''}
+          <div>📌 <b>Mô tả CV:</b> ${s.taskDesc || '<i style="color:var(--ink-soft);">Chưa có giao việc cố định</i>'}</div>
         </div>
       </div>
-      <div class="staff-foot">
-        <span style="font-size:0.76rem;color:var(--ink-soft);">${activeCount} việc đang xử lý</span>
+
+      <!-- Phần Footer thẻ nhân sự -->
+      <div class="staff-foot" style="margin-top: auto; padding-top: 10px; border-top: 1px solid var(--border-color, #f1f5f9);">
+        <span style="font-size:0.76rem;color:var(--ink-soft);"><b>${activeCount}</b> việc đang xử lý</span>
         <div style="display:flex;gap:4px;align-items:center;">
           <button class="icon-btn" onclick="viewStaffDetail(${s.id})" title="Xem/Sửa chi tiết">👁️</button>
           <button class="btn-table btn-assign" onclick="openAssignModal('${s.name.replace(/'/g,"\\'")}')">➕ Giao việc</button>
@@ -287,6 +309,8 @@ function viewStaffDetail(id) {
   if (document.getElementById('staffCode')) document.getElementById('staffCode').value = staff.code || '';
   if (document.getElementById('staffName')) document.getElementById('staffName').value = staff.name || '';
   if (document.getElementById('staffGroup')) document.getElementById('staffGroup').value = staff.group || 'Giảng viên';
+  if (document.getElementById('staffCategory')) document.getElementById('staffCategory').value = staff.category || 'Giảng dạy & NCKH';
+  if (document.getElementById('staffArea')) document.getElementById('staffArea').value = staff.area || '';
   if (document.getElementById('staffDegree')) document.getElementById('staffDegree').value = staff.degree || '';
   if (document.getElementById('staffRole')) document.getElementById('staffRole').value = staff.role || '';
   if (document.getElementById('staffPhone')) document.getElementById('staffPhone').value = staff.phone || '';
@@ -326,6 +350,8 @@ function saveStaff(event) {
     code: document.getElementById('staffCode')?.value.trim() || '',
     name: document.getElementById('staffName')?.value.trim() || '',
     group: document.getElementById('staffGroup')?.value || 'Giảng viên',
+    category: document.getElementById('staffCategory')?.value || 'Giảng dạy & NCKH',
+    area: document.getElementById('staffArea')?.value.trim() || '',
     degree: document.getElementById('staffDegree')?.value.trim() || '',
     role: document.getElementById('staffRole')?.value.trim() || '',
     phone: document.getElementById('staffPhone')?.value.trim() || '',
@@ -577,22 +603,22 @@ setInterval(() => {
   renderAllPages(); 
   if (currentActiveKey.startsWith('plan') || currentActiveKey.startsWith('assign') || currentActiveKey.startsWith('track')) renderPlanPage(); 
 }, 5 * 60 * 1000);
+
 /* ==========================================================
    TÍNH NĂNG LIÊN KẾT EXCEL (EXPORT & IMPORT NHÂN SỰ)
    ========================================================== */
-
-// 1. Xuất danh sách nhân sự ra file Excel (.xlsx)
 function exportStaffToExcel() {
   if (staffList.length === 0) {
     toast('Chưa có dữ liệu nhân sự để xuất file!', 'error');
     return;
   }
 
-  // Định dạng dữ liệu xuất ra Excel
   const excelData = staffList.map(s => ({
     "Mã NV": s.code || '',
     "Họ và Tên": s.name || '',
     "Phân loại": s.group || '',
+    "Danh mục CV": s.category || '',
+    "Lĩnh vực": s.area || '',
     "Học hàm/Học vị": s.degree || '',
     "Chức vụ": s.role || '',
     "Số điện thoại": s.phone || '',
@@ -605,12 +631,10 @@ function exportStaffToExcel() {
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "DanhSachNhanSu");
 
-  // Tải file về máy
   XLSX.writeFile(workbook, `Danh_Sach_Nhan_Su_BDU_${todayStr()}.xlsx`);
   toast('Đã xuất file Excel danh sách nhân sự thành công!');
 }
 
-// 2. Nhập dữ liệu từ file Excel vào phần mềm
 function importStaffFromExcel(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -631,7 +655,6 @@ function importStaffFromExcel(event) {
 
       let count = 0;
       jsonData.forEach((row, index) => {
-        // Đọc cột theo tiêu đề file Excel
         const name = row["Họ và Tên"] || row["Họ tên"] || row["Name"];
         if (name) {
           const newStaff = {
@@ -639,6 +662,8 @@ function importStaffFromExcel(event) {
             code: row["Mã NV"] || row["Mã nhân viên"] || '',
             name: name.trim(),
             group: row["Phân loại"] || row["Nhóm"] || 'Giảng viên',
+            category: row["Danh mục CV"] || row["Danh mục"] || 'Giảng dạy & NCKH',
+            area: row["Lĩnh vực"] || '',
             degree: row["Học hàm/Học vị"] || row["Học vị"] || '',
             role: row["Chức vụ"] || '',
             phone: row["Số điện thoại"] || row["SĐT"] || '',
@@ -660,8 +685,94 @@ function importStaffFromExcel(event) {
       console.error(err);
       toast('Định dạng file Excel không hợp lệ!', 'error');
     }
-    // Reset ô chọn file để chọn lại lần sau nếu cần
     event.target.value = '';
   };
+  reader.readAsArrayBuffer(file);
+}
+
+const toggleBtn = document.getElementById('themeToggleBtn');
+const themeIcon = document.getElementById('themeIcon');
+
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark-mode');
+  if (themeIcon) themeIcon.textContent = '☀️';
+}
+
+if (toggleBtn) {
+  toggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    
+    if (themeIcon) {
+      themeIcon.textContent = isDark ? '☀️' : '🌙';
+    }
+  });
+}
+/* ==========================================================
+   TÍNH NĂNG TỰ ĐỘNG GIAO VIỆC TỪ FILE EXCEL
+   ========================================================== */
+function importTasksFromExcel(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const firstSheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[firstSheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+      if (jsonData.length === 0) {
+        toast('File Excel không có dữ liệu!', 'error');
+        return;
+      }
+
+      let importedCount = 0;
+      jsonData.forEach((row, index) => {
+        // Tự động nhận diện tên cột linh hoạt
+        const staffName = row["Họ và Tên"] || row["Họ tên"] || row["Người thực hiện"] || row["Staff"];
+        const content = row["Nội dung công việc"] || row["Nội dung"] || row["Nhiệm vụ"] || row["Task"];
+
+        if (staffName && content) {
+          const newTask = {
+            id: Date.now() + index,
+            staff: staffName.trim(),
+            content: content.trim(),
+            targetRole: row["Khối"] || row["Phân loại"] || "Giảng viên",
+            cycle: row["Chu kỳ"] || "Tuần",
+            date: todayStr(),
+            deadline: row["Hạn chót"] || row["Hạn hoàn thành"] || null,
+            hours: parseFloat(row["Số giờ"] || row["Giờ"]) || 1,
+            status: "Đang thực hiện"
+          };
+
+          // Đưa nhiệm vụ mới vào danh sách hệ thống
+          tasks.unshift(newTask);
+          importedCount++;
+        }
+      });
+
+      if (importedCount > 0) {
+        saveData();
+        renderAllPages();
+        if (typeof renderPlanPage === 'function') renderPlanPage();
+        toast(`Đã tải lên file thành công! Tự động giao ${importedCount} nhiệm vụ.`);
+      } else {
+        toast('Không đọc được dữ liệu công việc. Vui lòng kiểm tra lại tên các cột trong file Excel!', 'error');
+      }
+
+    } catch (err) {
+      console.error(err);
+      toast('Định dạng file Excel không hợp lệ!', 'error');
+    }
+    
+    // Reset ô chọn file
+    event.target.value = '';
+  };
+
   reader.readAsArrayBuffer(file);
 }

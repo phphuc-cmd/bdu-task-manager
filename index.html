@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BDU Task Manager · Khoa Ngoại ngữ</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,7 +16,7 @@
       <div class="brand-logo">BDU</div>
       <div class="brand-info">
         <strong>KHOA NGOẠI NGỮ</strong>
-        <span>Task Manager · Tự động hóa</span>
+        <span>Faculty Management</span>
       </div>
     </div>
 
@@ -109,39 +107,26 @@
       <button class="nav-item btn-highlight" onclick="showPage('principal', this)">
         <span class="nav-icon">★</span><span class="nav-text">8. BÁO CÁO BGH</span>
       </button>
+
+      <div class="menu-divider">LIÊN KẾT NHANH</div>
+
+      <a href="https://ngoaingu.bdu.edu.vn/" target="_blank" class="nav-item">
+        <span class="nav-icon">🌐</span><span class="nav-text">Website Khoa</span>
+      </a>
+
+      <a href="https://www.facebook.com/khoangoaingu.bdu.edu.vn/" target="_blank" class="nav-item">
+        <span class="nav-icon">📘</span><span class="nav-text">Fanpage Khoa</span>
+      </a>
+
+      <a href="https://www.facebook.com/profile.php?id=61582207903606" target="_blank" class="nav-item">
+        <span class="nav-icon">🚩</span><span class="nav-text">Fanpage Đoàn - Hội</span>
+      </a>
     </nav>
-<!-- CÁC LIÊN KẾT NGOẠI VI -->
-<div class="menu-divider" style="margin: 12px 0 6px 12px; font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Liên kết nhanh</div>
 
-<a href="https://ngoaingu.bdu.edu.vn/" target="_blank" class="nav-item">
-  <span class="nav-icon">🌐</span>
-  <span class="nav-text">Website Khoa</span>
-</a>
-
-<a href="https://www.facebook.com/khoangoaingu.bdu.edu.vn/" target="_blank" class="nav-item">
-  <span class="nav-icon">📘</span>
-  <span class="nav-text">Fanpage Khoa</span>
-</a>
-
-<a href="https://www.facebook.com/profile.php?id=61582207903606" target="_blank" class="nav-item">
-  <span class="nav-icon">🚩</span>
-  <span class="nav-text">Fanpage Đoàn - Hội</span>
-</a>
-    <div class="sidebar-foot">© Khoa Ngoại ngữ — BDU · v3.0</div>
+    <div class="sidebar-foot">© Khoa Ngoại ngữ — BDU v3.0</div>
   </aside>
-<!-- BLOCK HOTLINE -->
-<div style="margin: 12px; padding: 10px 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1);">
-  <div style="font-size: 0.75rem; color: #a7f3d0; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
-    📞 HOTLINE HỖ TRỢ
-  </div>
-  <div style="font-size: 0.82rem; font-weight: 700; color: #ffffff;">
-    <a href="tel:0334034931" style="color: inherit; text-decoration: none;">0334 034 931</a>
-  </div>
-  <div style="font-size: 0.82rem; font-weight: 700; color: #ffffff;">
-    <a href="tel:0987272556" style="color: inherit; text-decoration: none;">0987 272 556</a>
-  </div>
-</div>
-  <!-- MAIN -->
+
+  <!-- MAIN WRAPPER -->
   <main class="main">
     <header class="topbar">
       <div>
@@ -149,6 +134,9 @@
         <h1 id="pageTitle">Dashboard tổng quan</h1>
       </div>
       <div class="topbar-right">
+        <button class="theme-btn" id="themeToggleBtn" title="Chuyển chế độ sáng/tối">
+          <span id="themeIcon">🌙</span>
+        </button>
         <button class="bell-btn" onclick="showPage('dashboard', document.querySelector('.nav-item'))" title="Cảnh báo quá hạn">
           🔔<span class="bell-dot" id="bellDot"></span>
         </button>
@@ -167,7 +155,7 @@
         <div class="page-heading">
           <div>
             <h2>Dashboard tổng quan</h2>
-            <p>Toàn cảnh khối lượng, tiến độ và hiệu suất công việc của Khoa — cập nhật tự động theo thời gian thực.</p>
+            <p>Toàn cảnh khối lượng, tiến độ và hiệu suất công việc của Khoa Ngoại ngữ.</p>
           </div>
           <div class="header-actions">
             <button class="btn-secondary" onclick="exportCSV()">⬇ Xuất CSV</button>
@@ -178,19 +166,19 @@
         <div class="pipeline">
           <div class="pipeline-step">
             <div class="pipeline-num">01</div>
-            <div class="pipeline-text"><strong>Giao việc</strong><span>Phân công theo khối nhân sự</span></div>
+            <div class="pipeline-text"><strong>Giao việc</strong><span>Khối nhân sự</span></div>
           </div>
           <div class="pipeline-step">
             <div class="pipeline-num">02</div>
-            <div class="pipeline-text"><strong>Thực hiện</strong><span>Cập nhật khối lượng giờ</span></div>
+            <div class="pipeline-text"><strong>Thực hiện</strong><span>Theo dõi giờ</span></div>
           </div>
           <div class="pipeline-step">
             <div class="pipeline-num">03</div>
-            <div class="pipeline-text"><strong>Theo dõi</strong><span>Cảnh báo quá hạn tự động</span></div>
+            <div class="pipeline-text"><strong>Cảnh báo</strong><span>Tự động quá hạn</span></div>
           </div>
           <div class="pipeline-step">
             <div class="pipeline-num">04</div>
-            <div class="pipeline-text"><strong>Báo cáo</strong><span>Tổng hợp trình Hiệu trưởng</span></div>
+            <div class="pipeline-text"><strong>Báo cáo</strong><span>Trình BGH</span></div>
             <div class="pipeline-metric" id="pipelinePercent">0%</div>
           </div>
         </div>
@@ -201,10 +189,9 @@
           <button onclick="jumpToOverdue()">Xem ngay</button>
         </div>
 
-        <!-- BỘ LỌC DASHBOARD -->
-        <div class="filter-bar" style="margin-bottom: 20px;">
+        <div class="filter-bar">
           <select id="dashCycleFilter" onchange="renderDashboard()">
-            <option value="ALL">🗓️ Tất cả chu kỳ (Tuần / Tháng / Quý / Năm)</option>
+            <option value="ALL">🗓️ Tất cả chu kỳ</option>
             <option value="Tuần">Kế hoạch Tuần</option>
             <option value="Tháng">Kế hoạch Tháng</option>
             <option value="Quý">Kế hoạch Quý</option>
@@ -221,27 +208,28 @@
         </div>
 
         <div class="stats-grid">
-          <div class="stat-card c-blue"><div class="stat-icon blue">📋</div><div><span>Tổng công việc</span><strong id="statTotal">0</strong></div></div>
-          <div class="stat-card c-green"><div class="stat-icon green">✅</div><div><span>Hoàn thành</span><strong id="statCompleted">0</strong></div></div>
-          <div class="stat-card c-amber"><div class="stat-icon amber">⏳</div><div><span>Đang thực hiện</span><strong id="statDoing">0</strong></div></div>
-          <div class="stat-card c-red"><div class="stat-icon red">⚠️</div><div><span>Quá hạn</span><strong id="statOverdue">0</strong></div></div>
-          <div class="stat-card c-brass"><div class="stat-icon brass">🎯</div><div><span>Tỷ lệ hoàn thành</span><strong id="statPercent">0%</strong></div></div>
+          <div class="stat-card"><div class="stat-icon blue">📋</div><div><span>Tổng công việc</span><strong id="statTotal">0</strong></div></div>
+          <div class="stat-card"><div class="stat-icon green">✅</div><div><span>Hoàn thành</span><strong id="statCompleted">0</strong></div></div>
+          <div class="stat-card"><div class="stat-icon amber">⏳</div><div><span>Đang thực hiện</span><strong id="statDoing">0</strong></div></div>
+          <div class="stat-card"><div class="stat-icon red">⚠️</div><div><span>Quá hạn</span><strong id="statOverdue">0</strong></div></div>
+          <div class="stat-card"><div class="stat-icon brass">🎯</div><div><span>Tỷ lệ hoàn thành</span><strong id="statPercent">0%</strong></div></div>
         </div>
 
         <div class="dashboard-grid">
           <div class="panel">
-            <h3>Khối lượng công việc theo Khối đối tượng</h3>
-            <div style="position:relative;height:270px;"><canvas id="roleChart"></canvas></div>
+            <h3>Phân bổ theo Khối đối tượng</h3>
+            <div style="position:relative;height:240px;"><canvas id="roleChart"></canvas></div>
           </div>
           <div class="panel">
-            <h3>Trạng thái nhiệm vụ chung (%)</h3>
-            <div style="position:relative;height:270px;display:flex;align-items:center;justify-content:center;"><canvas id="statusChart"></canvas></div>
+            <h3>Trạng thái nhiệm vụ</h3>
+            <div style="position:relative;height:240px;"><canvas id="statusChart"></canvas></div>
           </div>
         </div>
 
         <div class="panel" id="overdueSection">
           <div class="panel-header">
-            <div><h3>Danh sách nhiệm vụ gần đây</h3><div class="panel-sub">5 công việc cập nhật mới nhất — trạng thái quá hạn được gắn cờ tự động</div></div>
+            <h3>Danh sách nhiệm vụ gần đây</h3>
+            <div class="panel-sub">Công việc được cập nhật mới nhất</div>
           </div>
           <div class="table-wrapper">
             <table>
@@ -253,40 +241,42 @@
       </section>
 
       <!-- STAFF PAGE -->
-<section id="staff" class="page">
-  <div class="page-heading">
-    <div>
-      <h2>Danh mục nhân sự Khoa</h2>
-      <p>Quản lý danh sách, thông tin chi tiết và phân công nhiệm vụ nhân sự Khoa Ngoại ngữ.</p>
-    </div>
-    <button class="btn-primary" onclick="openStaffModal()">+ Thêm nhân sự mới</button>
-  </div>
+      <section id="staff" class="page">
+        <div class="page-heading">
+          <div>
+            <h2>Danh mục nhân sự Khoa</h2>
+            <p>Quản lý thông tin cán bộ, giảng viên, nhân viên và cộng tác viên Khoa Ngoại ngữ.</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn-secondary" onclick="exportStaffToExcel()">Export Excel</button>
+            <label class="btn-secondary" style="cursor:pointer;">
+              Import Excel <input type="file" accept=".xlsx, .xls" onchange="importStaffFromExcel(event)" style="display:none;">
+            </label>
+            <button class="btn-primary" onclick="openStaffModal()">+ Thêm nhân sự</button>
+          </div>
+        </div>
 
-  <!-- BỘ LỌC VÀ TÌM KIẾM -->
-  <div class="filter-bar">
-    <div style="flex: 1; display: flex; gap: 10px;">
-      <input type="text" id="searchStaff" placeholder="🔎 Tìm theo tên, mã NV, chức vụ..." oninput="renderStaffPage()">
-      <select id="filterStaffGroup" onchange="renderStaffPage()">
-        <option value="ALL">📁 Tất cả phân loại</option>
-        <option value="Giảng viên">🎓 Giảng viên</option>
-        <option value="Nhân viên">💼 Nhân viên</option>
-        <option value="Cộng tác viên">🤝 Cộng tác viên</option>
-      </select>
-    </div>
-  </div>
+        <div class="filter-bar">
+          <input type="text" id="searchStaff" placeholder="🔎 Tìm tên, mã NV, chức vụ..." oninput="renderStaffPage()">
+          <select id="filterStaffGroup" onchange="renderStaffPage()">
+            <option value="ALL">📁 Tất cả phân loại</option>
+            <option value="Giảng viên">Giảng viên</option>
+            <option value="Nhân viên">Nhân viên</option>
+            <option value="Cộng tác viên">Cộng tác viên</option>
+          </select>
+        </div>
 
-  <!-- LƯỚI HIỂN THỊ DANH SÁCH THẺ NHÂN SỰ -->
-  <div id="staffGrid" class="staff-grid"></div>
-</section>
+        <div id="staffGrid" class="staff-grid"></div>
+      </section>
 
       <!-- GENERIC PLAN PAGE -->
       <section id="generic-plan-page" class="page">
         <div class="page-heading">
-          <div><h2 id="planPageTitle">Kế hoạch công việc</h2><p id="planPageSub">Danh sách nhiệm vụ theo danh mục lựa chọn — gắn cờ quá hạn tự động.</p></div>
+          <div><h2 id="planPageTitle">Kế hoạch công việc</h2><p id="planPageSub">Danh sách nhiệm vụ theo danh mục lựa chọn.</p></div>
           <button class="btn-primary" onclick="openTaskModal()">+ Thêm công việc</button>
         </div>
         <div class="filter-bar">
-          <input type="text" id="searchTask" placeholder="🔎 Tìm theo nội dung, người thực hiện..." oninput="renderPlanPage()">
+          <input type="text" id="searchTask" placeholder="🔎 Tìm nội dung, người thực hiện..." oninput="renderPlanPage()">
           <select id="filterTaskStatus" onchange="renderPlanPage()">
             <option value="ALL">Tất cả trạng thái</option>
             <option value="Hoàn thành">Hoàn thành</option>
@@ -308,10 +298,10 @@
       <!-- PRINCIPAL REPORT -->
       <section id="principal" class="page">
         <div class="page-heading">
-          <div><h2>Báo cáo trình Hiệu trưởng</h2><p>Hệ thống tự động tổng hợp dữ liệu từ các khối công việc theo thời gian thực.</p></div>
-          <div class="action-buttons header-actions">
+          <div><h2>Báo cáo trình Hiệu trưởng</h2><p>Văn bản tổng hợp tự động theo thời gian thực.</p></div>
+          <div class="header-actions">
             <button class="btn-secondary" onclick="exportToWord()">📄 Xuất Word</button>
-            <button class="btn-primary" onclick="window.print()">🖨️ In / Xuất PDF (A4)</button>
+            <button class="btn-primary" onclick="window.print()">🖨️ In / Xuất PDF</button>
           </div>
         </div>
 
@@ -339,21 +329,21 @@
           <div id="reportSummaryBox" style="margin:10px 0 20px 20px;font-weight:bold;line-height:1.6;"></div>
 
           <h3 style="font-size:12pt;text-transform:uppercase;margin-top:20px;font-weight:bold;">II. CHI TIẾT KẾT QUẢ THỰC HIỆN THEO KHỐI</h3>
-          <p style="margin-bottom:5px;"><strong>1. Khối Giảng viên (Chuyên môn &amp; Đào tạo):</strong></p>
+          <p style="margin-bottom:5px;"><strong>1. Khối Giảng viên:</strong></p>
           <ul id="rptGVList" style="margin-left:30px;margin-bottom:15px;"></ul>
-          <p style="margin-bottom:5px;"><strong>2. Khối Nhân viên (Hành chính &amp; Vận hành):</strong></p>
+          <p style="margin-bottom:5px;"><strong>2. Khối Nhân viên:</strong></p>
           <ul id="rptNVList" style="margin-left:30px;margin-bottom:15px;"></ul>
           <p style="margin-bottom:5px;"><strong>3. Khối Cộng tác viên:</strong></p>
           <ul id="rptCTVList" style="margin-left:30px;margin-bottom:15px;"></ul>
-          <p style="margin-bottom:5px;"><strong>4. Hoạt động Đoàn - Hội &amp; Phong trào Sinh viên:</strong></p>
+          <p style="margin-bottom:5px;"><strong>4. Hoạt động Đoàn - Hội:</strong></p>
           <ul id="rptDHList" style="margin-left:30px;margin-bottom:15px;"></ul>
 
           <h3 style="font-size:12pt;text-transform:uppercase;margin-top:20px;font-weight:bold;">III. ĐỀ XUẤT VÀ KIẾN NGHỊ</h3>
-          <p style="text-indent:20px;text-align:justify;" id="reportRecommend">Kính trình Hiệu trưởng xem xét, phê duyệt và đưa ra chỉ đạo để đơn vị hoàn thành xuất sắc các nhiệm vụ trọng tâm kế tiếp.</p>
+          <p style="text-indent:20px;text-align:justify;" id="reportRecommend">Kính trình Hiệu trưởng xem xét, phê duyệt.</p>
 
-          <div style="display:flex;justify-content:space-between;text-align:center;margin-top:40px;page-break-inside:avoid;">
+          <div style="display:flex;justify-content:space-between;text-align:center;margin-top:40px;">
             <div style="width:40%;text-align:left;"><i><b>Nơi nhận:</b><br>- Ban Giám hiệu (để b/c);<br>- Lưu văn phòng Khoa.</i></div>
-            <div style="width:50%;"><strong>TRƯỞNG KHOA NGOẠI NGỮ</strong><br><i style="font-size:10pt;">(Ký và ghi rõ họ tên)</i><br><br><br><br><br></div>
+            <div style="width:50%;"><strong>TRƯỜNG KHOA NGOẠI NGỮ</strong><br><i style="font-size:10pt;">(Ký và ghi rõ họ tên)</i><br><br><br><br><br></div>
           </div>
         </div>
       </section>
@@ -369,7 +359,7 @@
     <form id="taskForm" onsubmit="saveTask(event)">
       <input type="hidden" id="taskId">
       <div class="form-grid">
-        <div><label>Phân loại khối</label>
+        <div class="form-group"><label>Phân loại khối</label>
           <select id="taskTargetRole" required>
             <option value="Giảng viên">Giảng viên</option>
             <option value="Nhân viên">Nhân viên</option>
@@ -377,7 +367,7 @@
             <option value="Đoàn Hội">Đoàn Hội</option>
           </select>
         </div>
-        <div><label>Chu kỳ kế hoạch</label>
+        <div class="form-group"><label>Chu kỳ kế hoạch</label>
           <select id="taskCycle" required>
             <option value="Tuần">Kế hoạch Tuần</option>
             <option value="Tháng">Kế hoạch Tháng</option>
@@ -387,15 +377,15 @@
         </div>
       </div>
       <div class="form-grid">
-        <div><label>Ngày giao</label><input type="date" id="taskDate" required></div>
-        <div><label>Hạn hoàn thành</label><input type="date" id="taskDeadline"></div>
+        <div class="form-group"><label>Ngày giao</label><input type="date" id="taskDate" required></div>
+        <div class="form-group"><label>Hạn hoàn thành</label><input type="date" id="taskDeadline"></div>
       </div>
       <div class="form-group"><label>Người thực hiện</label><input type="text" id="taskStaff" list="staffNameList" placeholder="Nhập hoặc chọn tên..." required></div>
       <datalist id="staffNameList"></datalist>
       <div class="form-group"><label>Nội dung công việc</label><textarea id="taskContent" rows="3" required placeholder="Nội dung chi tiết..."></textarea></div>
       <div class="form-grid">
-        <div><label>Số giờ tích lũy</label><input type="number" id="taskHours" step="0.5" min="0" value="1"></div>
-        <div><label>Trạng thái</label>
+        <div class="form-group"><label>Số giờ tích lũy</label><input type="number" id="taskHours" step="0.5" min="0" value="1"></div>
+        <div class="form-group"><label>Trạng thái</label>
           <select id="taskStatus">
             <option value="Đang thực hiện">Đang thực hiện</option>
             <option value="Hoàn thành">Hoàn thành</option>
@@ -411,7 +401,7 @@
   </div>
 </div>
 
-<!-- MODAL NHÂN SỰ (ĐÃ BỔ SUNG ĐẦY ĐỦ TRƯỜNG THÔNG TIN) -->
+<!-- MODAL NHÂN SỰ -->
 <div id="staffModal" class="modal">
   <div class="modal-content large">
     <div class="modal-header">
@@ -420,51 +410,28 @@
     </div>
     <form id="staffForm" onsubmit="saveStaff(event)">
       <div class="form-grid">
-        <div class="form-group">
-          <label>Mã nhân viên</label>
-          <input type="text" id="staffCode" required placeholder="VD: BDU-202601">
-        </div>
-        <div class="form-group">
-          <label>Họ và tên</label>
-          <input type="text" id="staffName" required placeholder="Nhập họ và tên...">
-        </div>
+        <div class="form-group"><label>Mã nhân viên</label><input type="text" id="staffCode" required placeholder="Mã NV..."></div>
+        <div class="form-group"><label>Họ và tên</label><input type="text" id="staffName" required placeholder="Họ và tên..."></div>
       </div>
 
       <div class="form-grid">
-        <div class="form-group">
-          <label>Phân loại nhóm</label>
+        <div class="form-group"><label>Phân loại nhóm</label>
           <select id="staffGroup">
             <option value="Giảng viên">Giảng viên</option>
             <option value="Nhân viên">Nhân viên</option>
             <option value="Cộng tác viên">Cộng tác viên</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Học hàm / Học vị</label>
-          <input type="text" id="staffDegree" placeholder="VD: Thạc sĩ / Tiến sĩ">
-        </div>
+        <div class="form-group"><label>Học hàm / Học vị</label><input type="text" id="staffDegree" placeholder="Cử nhân/Thạc sĩ/Tiến sĩ..."></div>
       </div>
 
       <div class="form-grid">
-        <div class="form-group">
-          <label>Chức vụ</label>
-          <input type="text" id="staffRole" required placeholder="VD: Giảng viên cơ hữu / Thư ký khoa">
-        </div>
-        <div class="form-group">
-          <label>Số điện thoại</label>
-          <input type="tel" id="staffPhone" placeholder="VD: 0912 345 678">
-        </div>
+        <div class="form-group"><label>Chức vụ</label><input type="text" id="staffRole" required placeholder="Chức vụ..."></div>
+        <div class="form-group"><label>Số điện thoại</label><input type="tel" id="staffPhone" placeholder="SĐT..."></div>
       </div>
 
-      <div class="form-group">
-        <label>Email liên hệ</label>
-        <input type="email" id="staffEmail" placeholder="VD: nva@bdu.edu.vn">
-      </div>
-
-      <div class="form-group">
-        <label>Nhiệm vụ thực hiện</label>
-        <textarea id="staffTaskDesc" rows="2" placeholder="Nhiệm vụ trọng tâm, mảng phụ trách..."></textarea>
-      </div>
+      <div class="form-group"><label>Email liên hệ</label><input type="email" id="staffEmail" placeholder="Email..."></div>
+      <div class="form-group"><label>Nhiệm vụ thực hiện</label><textarea id="staffTaskDesc" rows="2" placeholder="Phụ trách..."></textarea></div>
 
       <div class="modal-actions">
         <button type="button" class="btn-secondary" onclick="closeModal('staffModal')">Hủy</button>
@@ -480,10 +447,10 @@
     <div class="modal-header"><h3>📝 Giao công việc nhanh</h3><button class="modal-close" onclick="closeModal('assignModal')">&times;</button></div>
     <form id="assignForm" onsubmit="handleAssignSubmit(event)">
       <div class="form-group"><label>Người nhận công việc</label><input type="text" id="assignTargetName" readonly></div>
-      <div class="form-group"><label>Tên công việc / Nhiệm vụ</label><input type="text" id="taskName" placeholder="Nhập tên công việc..." required></div>
+      <div class="form-group"><label>Tên công việc / Nhiệm vụ</label><input type="text" id="taskName" placeholder="Tên công việc..." required></div>
       <div class="form-grid">
-        <div><label>Hạn hoàn thành</label><input type="date" id="taskDeadlineQuick" required></div>
-        <div><label>Mức độ ưu tiên</label>
+        <div class="form-group"><label>Hạn hoàn thành</label><input type="date" id="taskDeadlineQuick" required></div>
+        <div class="form-group"><label>Mức độ ưu tiên</label>
           <select id="taskPriority">
             <option value="Bình thường">Bình thường</option>
             <option value="Cao">Cao</option>
@@ -493,7 +460,7 @@
       </div>
       <div class="modal-actions">
         <button type="button" class="btn-secondary" onclick="closeModal('assignModal')">Hủy</button>
-        <button type="submit" class="btn-primary">🚀 Xác nhận giao việc</button>
+        <button type="submit" class="btn-primary">Xác nhận giao việc</button>
       </div>
     </form>
   </div>
@@ -501,7 +468,7 @@
 
 <div class="toast-stack" id="toastStack"></div>
 
-<script src="app.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
