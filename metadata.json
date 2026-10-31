@@ -1,0 +1,6 @@
+{
+  "name": "BDU ACADEMIC MANAGEMENT - Khoa Ngoại ngữ Trường Đại học Bình Dương",
+  "description": "Hệ thống quản trị học vụ và đào tạo toàn diện Khoa Ngoại ngữ – Trường Đại học Bình Dương (BDU). Quản lý sinh viên, lịch đào tạo, chuyên cần, hồ sơ học vụ, công việc và báo cáo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
